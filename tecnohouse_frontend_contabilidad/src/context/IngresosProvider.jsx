@@ -23,6 +23,7 @@ export const IngresosProvider = ({ children }) => {
   const [ingresos, setIngresos] = useState([]);
   const [ingresoMensual, setIngresoMensual] = useState([]);
   const [isOpenIngresos, setIsOpenIngresos] = useState(false);
+  const [isOpenEditarIngresos, setIsOpenEditarIngresos] = useState(false);
 
   const openModalIngresos = () => {
     setIsOpenIngresos(true);
@@ -30,6 +31,14 @@ export const IngresosProvider = ({ children }) => {
 
   const closeModalIngresos = () => {
     setIsOpenIngresos(false);
+  };
+
+  const openModalEditar = () => {
+    setIsOpenEditarIngresos(true);
+  };
+
+  const closeModalEditar = () => {
+    setIsOpenEditarIngresos(false);
   };
 
   useEffect(() => {
@@ -61,6 +70,9 @@ export const IngresosProvider = ({ children }) => {
         openModalIngresos,
         closeModalIngresos,
         ingresoMensual,
+        isOpenEditarIngresos,
+        openModalEditar,
+        closeModalEditar,
       }}
     >
       {children}

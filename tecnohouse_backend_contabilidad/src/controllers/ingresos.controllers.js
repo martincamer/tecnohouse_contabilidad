@@ -13,7 +13,7 @@ export const getIngreso = async (req, res) => {
 
   if (result.rowCount === 0) {
     return res.status(404).json({
-      message: "No existe ningun presupuesto con ese id",
+      message: "No existe ningun ingreso con ese id",
     });
   }
 
@@ -45,7 +45,7 @@ export const actualizarIngreso = async (req, res) => {
   const { detalle, tipo, total } = req.body;
 
   const result = await pool.query(
-    "UPDATE ingresos SET total = $1 , detalle = $2, tipo = $3 WHERE id = $4",
+    "UPDATE ingresos SET detalle = $1 , tipo = $2, total = $3 WHERE id = $4",
     [detalle, tipo, total, id]
   );
 

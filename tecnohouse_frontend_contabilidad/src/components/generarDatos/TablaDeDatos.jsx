@@ -1,7 +1,16 @@
+import { useState } from "react";
 import { useIngresosContext } from "../../context/IngresosProvider";
 
-export const TablaDeDatos = () => {
-  const { ingresoMensual } = useIngresosContext();
+export const TablaDeDatos = ({
+  handleId,
+  openModalEliminar,
+  setObtenerIdTwo,
+}) => {
+  const { ingresoMensual, openModalEditar } = useIngresosContext();
+
+  const handleIdTwo = (id) => {
+    setObtenerIdTwo(id);
+  };
 
   return (
     <div className="h-[70vh] w-full">
@@ -28,6 +37,9 @@ export const TablaDeDatos = () => {
             </th>
             <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Ver
+            </th>
+            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Eliminar
             </th>
           </tr>
         </thead>
@@ -60,6 +72,9 @@ export const TablaDeDatos = () => {
               </td>
               <td className="py-3 px-3 text-sm text-left text-slate-700">
                 <button
+                  onClick={() => {
+                    handleIdTwo(i?.id), openModalEditar();
+                  }}
                   type="button"
                   className="bg-indigo-500/10 border-[1px] border-indigo-500 py-1 px-3 text-indigo-600 rounded-lg text-left"
                 >
@@ -72,6 +87,18 @@ export const TablaDeDatos = () => {
                   className="bg-slate-500/10 border-[1px] border-slate-500 py-1 px-3 rounded-lg text-left text-slate-700"
                 >
                   Ver ingreso
+                </button>
+              </td>
+
+              <td className="py-3 px-3 text-sm text-left text-slate-700">
+                <button
+                  onClick={() => {
+                    handleId(i?.id), openModalEliminar();
+                  }}
+                  type="button"
+                  className="bg-red-500/10 border-[1px] border-red-500 py-1 px-3 rounded-lg text-left text-red-700"
+                >
+                  Eliminar
                 </button>
               </td>
             </tr>
