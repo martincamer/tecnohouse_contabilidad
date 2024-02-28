@@ -61,6 +61,7 @@ export const PresupuestosProvider = ({ children }) => {
         openModal,
         closeModal,
         presupuestoMensual,
+        setPresupuestoMensual,
       }}
     >
       {children}

@@ -1,9 +1,5 @@
 //imports
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-  obtenerPresupuestoMensual,
-  obtenerPresupuestos,
-} from "../api/presupuestos";
 import { obtenerIngreso, obtenerIngresoMensual } from "../api/ingresos";
 
 //context
@@ -63,6 +59,20 @@ export const IngresosProvider = ({ children }) => {
     loadData();
   }, []); // Include nombreMes in the dependency array if it changes.
 
+  const [busqueda, setBusqueda] = useState("");
+
+  const handleBusquedaChange = (event) => {
+    setBusqueda(event.target.value);
+  };
+
+  const resultadosFiltrados = ingresoMensual.filter(
+    (item) =>
+      (item.detalle &&
+        item.detalle.toLowerCase().includes(busqueda.toLowerCase())) ||
+      (item.codigo &&
+        item.codigo.toLowerCase().includes(busqueda.toLowerCase()))
+  );
+
   return (
     <IngresosContext.Provider
       value={{
@@ -73,6 +83,11 @@ export const IngresosProvider = ({ children }) => {
         isOpenEditarIngresos,
         openModalEditar,
         closeModalEditar,
+        setIngresoMensual,
+        ingresoMensual,
+        resultadosFiltrados,
+        handleBusquedaChange,
+        busqueda,
       }}
     >
       {children}

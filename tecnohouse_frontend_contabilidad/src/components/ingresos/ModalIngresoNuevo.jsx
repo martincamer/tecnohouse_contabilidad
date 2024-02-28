@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useIngresosContext } from "../../context/IngresosProvider";
 import { crearIngresoNuevo } from "../../api/ingresos";
+import { useTipoContext } from "../../context/TiposProvider";
 
 export const ModalNuevoIngreso = () => {
   const {
@@ -15,6 +16,10 @@ export const ModalNuevoIngreso = () => {
   } = useForm();
 
   const { isOpenIngresos, closeModalIngresos } = useIngresosContext();
+
+  const { setIngresoMensual, ingresoMensual } = useIngresosContext();
+
+  const { tipos } = useTipoContext();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -28,9 +33,15 @@ export const ModalNuevoIngreso = () => {
 
       const res = await crearIngresoNuevo(data);
 
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
+      // Verificar si el tipo ya existe antes de agregarlo al estado
+      const tipoExistente = ingresoMensual.find(
+        (tipo) => tipo.id === res.data.id
+      );
+
+      if (!tipoExistente) {
+        // Actualizar el estado de tipos agregando el nuevo tipo al final
+        setIngresoMensual((prevTipos) => [...prevTipos, res.data]);
+      }
 
       toast.success("Ingreso creado correctamente!", {
         position: "top-right",
@@ -42,8 +53,12 @@ export const ModalNuevoIngreso = () => {
         progress: undefined,
         theme: "light",
       });
+
+      setTimeout(() => {
+        closeModalIngresos();
+      }, 1000);
     } catch (error) {
-      console.log(error.response.data);
+      // console.log(error.response.data);
     }
   });
 
@@ -99,7 +114,7 @@ export const ModalNuevoIngreso = () => {
             >
               <div className="inline-block w-[400px] p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <div className="text-lg text-indigo-500 mb-3 border-b-[1px] uppercase">
-                  Crear nuevo valor
+                  Crear nuevo tipo
                 </div>
                 <form
                   onSubmit={onSubmit}
@@ -128,7 +143,9 @@ export const ModalNuevoIngreso = () => {
                       className="py-2 px-4 border-[1px] border-black/10 rounded-lg shadow shadow-black/10 outline-none"
                     >
                       <option value="">Seleccionar</option>
-                      <option value="sueldos">Sueldos</option>
+                      {tipos.map((t) => (
+                        <option key={t.id}>{t?.tipo}</option>
+                      ))}
                     </select>
                   </div>
                   <div className="flex flex-col gap-1">

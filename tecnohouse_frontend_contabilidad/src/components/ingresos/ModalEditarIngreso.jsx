@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useIngresosContext } from "../../context/IngresosProvider";
 import { editarIngreso, obtenerUnicoIngreso } from "../../api/ingresos";
+import { useTipoContext } from "../../context/TiposProvider";
 
 export const ModalEditarIngreso = ({ obtenerId }) => {
   const {
@@ -14,7 +15,14 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
     formState: { errors },
   } = useForm();
 
-  const { isOpenEditarIngresos, closeModalEditar } = useIngresosContext();
+  const {
+    isOpenEditarIngresos,
+    closeModalEditar,
+    setIngresoMensual,
+    ingresoMensual,
+  } = useIngresosContext();
+
+  const { tipos } = useTipoContext();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -28,9 +36,33 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
 
       const res = await editarIngreso(obtenerId, data);
 
+      const tipoExistenteIndex = ingresoMensual.findIndex(
+        (tipo) => tipo.id === obtenerId
+      );
+
+      console.log("tipoExistenteIndex:", tipoExistenteIndex);
+
+      setIngresoMensual((prevTipos) => {
+        const newTipos = [...prevTipos];
+        const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
+        const updatedDetalle = JSON.parse(res.config.data); // Convierte el JSON a objeto
+        const updatedTotal = JSON.parse(res.config.data); // Convierte el JSON a objeto
+
+        newTipos[tipoExistenteIndex] = {
+          id: obtenerId,
+          tipo: updatedTipo.tipo,
+          detalle: updatedDetalle.detalle,
+          total: updatedTotal.total,
+          created_at: newTipos[tipoExistenteIndex].created_at,
+          updated_at: newTipos[tipoExistenteIndex].updated_at,
+        };
+        console.log("Estado después de la actualización:", newTipos);
+        return newTipos;
+      });
+
       setTimeout(() => {
-        location.reload();
-      }, 1500);
+        closeModalEditar();
+      }, 500);
 
       toast.success("Ingreso editado correctamente!", {
         position: "top-right",
@@ -66,7 +98,6 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenEditarIngresos} as={Fragment}>
         <Dialog
           as="div"
@@ -145,7 +176,9 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
                       className="py-2 px-4 border-[1px] border-black/10 rounded-lg shadow shadow-black/10 outline-none"
                     >
                       <option value="">Seleccionar</option>
-                      <option value="sueldos">Sueldos</option>
+                      {tipos.map((t) => (
+                        <option key={t.id}>{t?.tipo}</option>
+                      ))}
                     </select>
                   </div>
                   <div className="flex flex-col gap-1">

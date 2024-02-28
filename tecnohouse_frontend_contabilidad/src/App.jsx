@@ -13,6 +13,8 @@ import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import { IngresosProvider } from "./context/IngresosProvider";
+import { TiposProvider } from "./context/TiposProvider";
+import { ViewPdf } from "./components/pdf/ViewPdf";
 
 function App() {
   const { isAuth } = useAuth();
@@ -34,16 +36,19 @@ function App() {
               element={
                 <PresupuestosProvider>
                   <IngresosProvider>
-                    <main className="flex gap-2 h-full">
-                      <SideBar />
-                      <Outlet />
-                    </main>
+                    <TiposProvider>
+                      <main className="flex gap-2 h-full">
+                        <SideBar />
+                        <Outlet />
+                      </main>
+                    </TiposProvider>
                   </IngresosProvider>
                 </PresupuestosProvider>
               }
             >
               <Route index path="/" element={<Home />} />
-              <Route index path="/generar-datos" element={<GenerarDatos />} />
+              <Route path="/generar-datos" element={<GenerarDatos />} />
+              <Route path="/view-pdf" element={<ViewPdf />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

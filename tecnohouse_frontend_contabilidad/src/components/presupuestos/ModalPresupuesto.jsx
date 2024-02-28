@@ -6,7 +6,7 @@ import { ModalCrearTotal } from "./ModalCrearTotal";
 import { ModalEditarPresupuesto } from "./ModalEditarPresupuesto";
 
 export const ModalPresupuesto = () => {
-  const { isOpen, closeModal, presupuestos } = usePresupuestosContext();
+  const { isOpen, closeModal, presupuestoMensual } = usePresupuestosContext();
   const [obtenerId, setObtenerId] = useState("");
 
   const [isOpenCrear, setIsOpenCrear] = useState(false);
@@ -97,33 +97,32 @@ export const ModalPresupuesto = () => {
                   </button>
                 </div>
                 <div className="bg-slate-100 border-lg px-2 py-3 rounded-lg shadow shadow-gray-400 mt-5">
-                  <p className="font-semibold text-indigo-500 text-lg">
-                    Presupuestos creados del mes
+                  <p className="font-normal text-slate-700  text-sm">
+                    Presupuestos creado del mes
                   </p>
                   <div className="my-5">
-                    {presupuestos?.map((p) => (
+                    {presupuestoMensual?.map((p) => (
                       <div key={p.id} className="flex gap-4 items-center">
-                        <p className="font-bold text-slate-700">
-                          TOTAL:{" "}
-                          <span className="text-indigo-500 font-normal">
-                            {Number(p?.total).toLocaleString("es-AR", {
-                              style: "currency",
-                              currency: "ARS",
-                            })}
-                          </span>
+                        <p className="font-normals text-slate-700 flex flex-col gap-2">
+                          Total{" "}
                         </p>
 
-                        <div>
-                          <button
-                            onClick={() => {
-                              handleId(p.id), openModalEdit();
-                            }}
-                            className="bg-indigo-500/10 text-indigo-600  py-1 px-6 rounded-lg border-[1px] border-indigo-600 text-sm"
-                            type="button"
-                          >
-                            Editar
-                          </button>
-                        </div>
+                        <span className="text-indigo-500 font-normal">
+                          {Number(p?.total).toLocaleString("es-AR", {
+                            style: "currency",
+                            currency: "ARS",
+                          })}
+                        </span>
+
+                        <button
+                          onClick={() => {
+                            handleId(p.id), openModalEdit();
+                          }}
+                          className="bg-indigo-500/10 text-indigo-600  py-1 px-6 rounded-lg border-[1px] border-indigo-600 text-sm"
+                          type="button"
+                        >
+                          Editar
+                        </button>
                       </div>
                     ))}
                   </div>

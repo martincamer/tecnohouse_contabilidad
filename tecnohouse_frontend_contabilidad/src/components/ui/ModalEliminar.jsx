@@ -1,19 +1,26 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useTipoContext } from "../../context/TiposProvider";
 
 export const ModalEliminar = ({
   isOpenEliminar,
   closeModalEliminar,
   obtenerId,
   eliminar,
+  texto,
+  datoUno,
+  datoDos,
 }) => {
   const handleEliminar = () => {
-    eliminar(obtenerId);
+    const res = eliminar(obtenerId);
+
+    const updatedTipos = datoUno.filter((tipo) => tipo.id !== obtenerId);
+    datoDos(updatedTipos);
 
     toast.error("Eliminado correctamente!", {
       position: "top-right",
-      autoClose: 1500,
+      autoClose: 500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -23,13 +30,12 @@ export const ModalEliminar = ({
     });
 
     setTimeout(() => {
-      location.reload();
-    }, 1500);
+      closeModalEliminar();
+    }, 500);
   };
 
   return (
     <Menu as="div" className="z-50">
-      <ToastContainer />
       <Transition appear show={isOpenEliminar} as={Fragment}>
         <Dialog
           as="div"
@@ -79,7 +85,7 @@ export const ModalEliminar = ({
             >
               <div className="inline-block w-[500px] p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <div className="text-lg text-indigo-500 mb-3 border-b-[1px] uppercase">
-                  Desea eliminar el ingreso
+                  {texto}
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -92,9 +98,23 @@ export const ModalEliminar = ({
                   <button
                     onClick={() => handleEliminar()}
                     type="button"
-                    className="bg-red-500/10 border-[1px] border-red-500 py-1 px-3 rounded-lg text-left text-red-700 w-full"
+                    className="flex gap-2 items-center justify-between bg-red-500/10 border-[1px] border-red-500 py-1 px-3 rounded-lg text-left text-red-700 w-full"
                   >
-                    Eliminar ingreso
+                    Eliminar{" "}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
                   </button>
                 </div>
                 <div className="mt-4">

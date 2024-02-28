@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthProvider";
 import { Label } from "../../components/formularios/Label";
 import { Input } from "../../components/formularios/Input";
 import { Button } from "../../components/formularios/Button";
+import { InputPassword } from "../../components/formularios/InputPassword";
 
 export const Login = () => {
   const { signin, error } = useAuth();
@@ -21,17 +22,20 @@ export const Login = () => {
     const user = await signin(data);
 
     if (user) {
-      navigate("/home");
+      navigate("/");
     }
   });
 
   return (
-    <section className="flex items-center gap-12 h-screen pt-[300px] bg-gray-100 flex-col relative">
-      <div className="absolute top-14">
+    <section className="flex items-center justify-center gap-12 h-screen  bg-slate-100 flex-col relative">
+      <div className="absolute top-14 ">
         <img className="h-[100px]" src={"./logoempresa.png"} />
       </div>
       {/* <div className="h-[300px] rounded-full absolute top-10 left-[300px] w-[300px] bg-indigo-700 shadow-lg"></div> */}
-      <form onSubmit={onSubmit} className="flex w-1/4 flex-col gap-4">
+      <form
+        onSubmit={onSubmit}
+        className="flex w-1/4 flex-col gap-4 bg-slate-300 px-10 py-10 rounded-lg shadow-md shadow-gray-500/40"
+      >
         {
           <div>
             <div className="flex flex-col gap-1">
@@ -54,7 +58,7 @@ export const Login = () => {
         </div>
         <div className="flex flex-col gap-2">
           <Label label="Contraseña del registro" />
-          <Input
+          <InputPassword
             register={register}
             // registro={{ ...register("password", { required: true }) }}
             placeholder={""}
@@ -67,7 +71,7 @@ export const Login = () => {
       </form>
 
       <svg
-        className="absolute bottom-[-50px]"
+        className="absolute bottom-[-150px]"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 320"
       >

@@ -1,8 +1,12 @@
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { editarPresupuesto } from "../../api/presupuestos";
+import {
+  editarPresupuesto,
+  obtenerUnicoPresupuesto,
+} from "../../api/presupuestos";
 import { useForm } from "react-hook-form";
+import { usePresupuestosContext } from "../../context/PresupuestosProvider";
 
 export const ModalEditarPresupuesto = ({
   isOpenEdit,
@@ -17,6 +21,19 @@ export const ModalEditarPresupuesto = ({
     formState: { errors },
   } = useForm();
 
+  const { presupuestoMensual, setPresupuestoMensual } =
+    usePresupuestosContext();
+
+  useEffect(() => {
+    async function loadData() {
+      const res = await obtenerUnicoPresupuesto(obtenerId);
+
+      setValue("total", res.data.total);
+    }
+
+    loadData();
+  }, [obtenerId]);
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const precioUnidadNumerico = parseInt(
@@ -29,9 +46,29 @@ export const ModalEditarPresupuesto = ({
 
       const res = await editarPresupuesto(obtenerId, data);
 
+      const tipoExistenteIndex = presupuestoMensual.findIndex(
+        (tipo) => tipo.id === obtenerId
+      );
+
+      console.log("tipoExistenteIndex:", tipoExistenteIndex);
+
+      setPresupuestoMensual((prevTipos) => {
+        const newTipos = [...prevTipos];
+        const updatedTotal = JSON.parse(res.config.data); // Convierte el JSON a objeto
+
+        newTipos[tipoExistenteIndex] = {
+          id: obtenerId,
+          total: updatedTotal.total,
+          created_at: newTipos[tipoExistenteIndex].created_at,
+          updated_at: newTipos[tipoExistenteIndex].updated_at,
+        };
+        console.log("Estado después de la actualización:", newTipos);
+        return newTipos;
+      });
+
       setTimeout(() => {
-        location.reload();
-      }, 1500);
+        closeModalEdit();
+      }, 500);
 
       toast.success("Editar correctamente!", {
         position: "top-right",

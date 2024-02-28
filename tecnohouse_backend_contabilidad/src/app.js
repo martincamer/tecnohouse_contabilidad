@@ -3,6 +3,7 @@ import morgan from "morgan";
 import ingresosRoutes from "./routes/ingresos.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import presupuestoRoutes from "./routes/presupuesto.routes.js";
+import tiposRoutes from "./routes/tipo.routes.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -37,6 +38,7 @@ app.get("/api/ping", async (req, res) => {
 app.use("/api", authRoutes);
 app.use("/api", ingresosRoutes);
 app.use("/api", presupuestoRoutes);
+app.use("/api", tiposRoutes);
 
 //error handler
 app.use((err, req, res, next) => {
