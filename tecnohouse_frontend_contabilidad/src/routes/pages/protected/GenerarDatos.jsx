@@ -2,6 +2,7 @@ import { Buscador } from "../../../components/generarDatos/Buscador";
 import { Categorias } from "../../../components/generarDatos/Categorias";
 import { IntroActual } from "../../../components/generarDatos/IntroActual";
 import { TablaDeDatos } from "../../../components/generarDatos/TablaDeDatos";
+import { ModalNuevoIngreso } from "../../../components/ingresos/ModalIngresoNuevo";
 import { ModalPresupuesto } from "../../../components/presupuestos/ModalPresupuesto";
 
 export const GenerarDatos = () => {
@@ -15,6 +16,7 @@ export const GenerarDatos = () => {
       <TablaDeDatos />
 
       <ModalPresupuesto />
+      <ModalNuevoIngreso />
       <div>
         <button
           type="button"

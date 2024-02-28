@@ -5,7 +5,7 @@ export const crearPresupuestoNuevo = (data) =>
 
 export const obtenerPresupuestos = () => axios.get("/presupuestos");
 
-export const obtenerPresupuestoMensual = () => axios.get("/presupuestos/mes");
+export const obtenerPresupuestoMensual = () => axios.get("/presupuestos-mes");
 
 export const editarPresupuesto = (obtenerParams, data) =>
   axios.put(`/presupuestos/${obtenerParams}`, data);

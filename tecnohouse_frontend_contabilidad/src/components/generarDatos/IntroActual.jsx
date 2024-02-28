@@ -11,7 +11,7 @@ export const IntroActual = () => {
         <p className="text-indigo-500 text-sm">Total del presupuesto</p>
         {presupuestoMensual.map((p) => (
           <p className="text-slate-700 text-sm font-semibold">
-            {p?.total.toLocaleString("es-AR", {
+            {Number(p?.total).toLocaleString("es-AR", {
               style: "currency",
               currency: "ARS",
             })}

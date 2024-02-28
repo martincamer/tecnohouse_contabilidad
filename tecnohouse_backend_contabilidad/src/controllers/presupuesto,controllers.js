@@ -74,21 +74,15 @@ export const eliminarGasto = async (req, res) => {
   return res.sendStatus(204);
 };
 
-export const getPresupuestoDelMes = async (req, res, next) => {
-  // Obtener la fecha de inicio y fin del mes actual
-  const fechaInicioMes = new Date();
-  fechaInicioMes.setDate(1);
-  fechaInicioMes.setHours(0, 0, 0, 0);
+export const getPresupuestoMesActual = async (req, res, next) => {
+  try {
+    const result = await pool.query(
+      "SELECT * FROM presupuesto WHERE DATE_TRUNC('month', created_at) = DATE_TRUNC('month', CURRENT_DATE)"
+    );
 
-  const fechaFinMes = new Date();
-  fechaFinMes.setMonth(fechaFinMes.getMonth() + 1, 0);
-  fechaFinMes.setHours(23, 59, 59, 999);
-
-  // Consulta SQL para obtener los gastos del mes actual
-  const result = await pool.query(
-    "SELECT * FROM presupuesto WHERE id = $1 AND created_at BETWEEN $2 AND $3",
-    [req.id, fechaInicioMes, fechaFinMes]
-  );
-
-  return res.json(result.rows);
+    return res.json(result.rows);
+  } catch (error) {
+    console.error("Error al obtener presupuestos:", error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
 };

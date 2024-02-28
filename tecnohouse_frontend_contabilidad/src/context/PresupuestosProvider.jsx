@@ -40,17 +40,18 @@ export const PresupuestosProvider = ({ children }) => {
     loadData();
   }, []);
 
-  const fechaActual = new Date(); // O utiliza la fecha que necesites
-  const nombreMes = fechaActual.toLocaleDateString("es-AR", { month: "long" });
-
   useEffect(() => {
     async function loadData() {
-      const res = await obtenerPresupuestoMensual(nombreMes);
-
-      setPresupuestoMensual(res.data);
+      try {
+        const res = await obtenerPresupuestoMensual();
+        setPresupuestoMensual(res.data);
+      } catch (error) {
+        console.error("Error fetching data:", error.response.data);
+        // Handle the error (e.g., display an error message)
+      }
     }
     loadData();
-  }, []);
+  }, []); // Include nombreMes in the dependency array if it changes.
 
   return (
     <PresupuestosContext.Provider

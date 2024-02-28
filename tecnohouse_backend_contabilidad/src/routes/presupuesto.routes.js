@@ -4,7 +4,7 @@ import {
   createPresupuesto,
   eliminarGasto,
   getPresupuesto,
-  getPresupuestoDelMes,
+  getPresupuestoMesActual,
   getPresupuestos,
 } from "../controllers/presupuesto,controllers.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
@@ -13,7 +13,7 @@ const router = Router();
 
 router.get("/presupuestos", isAuth, getPresupuestos);
 
-router.get("/presupuestos/mes", isAuth, getPresupuestoDelMes);
+router.get("/presupuestos-mes", isAuth, getPresupuestoMesActual);
 
 router.get("/presupuestos/:id", isAuth, getPresupuesto);
 

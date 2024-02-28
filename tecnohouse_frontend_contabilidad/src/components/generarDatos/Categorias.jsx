@@ -1,7 +1,9 @@
+import { useIngresosContext } from "../../context/IngresosProvider";
 import { usePresupuestosContext } from "../../context/PresupuestosProvider";
 
 export const Categorias = () => {
   const { openModal } = usePresupuestosContext();
+  const { openModalIngresos } = useIngresosContext();
 
   return (
     <div className="bg-white w-full py-4 px-6 border-[1px] border-slate-300 shadow-md rounded-lg flex gap-4">
@@ -9,6 +11,7 @@ export const Categorias = () => {
         <button
           className="bg-indigo-500 text-white py-2 px-5 rounded-lg text-sm"
           type="button"
+          onClick={() => openModalIngresos()}
         >
           Ingreso nuevo
         </button>

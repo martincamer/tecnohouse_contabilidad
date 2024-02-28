@@ -3,11 +3,14 @@ import { Fragment, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { usePresupuestosContext } from "../../context/PresupuestosProvider";
 import { ModalCrearTotal } from "./ModalCrearTotal";
+import { ModalEditarPresupuesto } from "./ModalEditarPresupuesto";
 
 export const ModalPresupuesto = () => {
   const { isOpen, closeModal, presupuestos } = usePresupuestosContext();
+  const [obtenerId, setObtenerId] = useState("");
 
   const [isOpenCrear, setIsOpenCrear] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
 
   const openModalCrear = () => {
     setIsOpenCrear(true);
@@ -15,6 +18,19 @@ export const ModalPresupuesto = () => {
 
   const closeModalCrear = () => {
     setIsOpenCrear(false);
+  };
+
+  const openModalEdit = () => {
+    setIsOpenEdit(true);
+  };
+
+  const closeModalEdit = () => {
+    setIsOpenEdit(false);
+  };
+
+  //obtener
+  const handleId = (id) => {
+    setObtenerId(id);
   };
 
   return (
@@ -86,15 +102,29 @@ export const ModalPresupuesto = () => {
                   </p>
                   <div className="my-5">
                     {presupuestos?.map((p) => (
-                      <p className="font-bold text-slate-700">
-                        TOTAL:{" "}
-                        <span className="text-indigo-500 font-normal">
-                          {Number(p?.total).toLocaleString("es-AR", {
-                            style: "currency",
-                            currency: "ARS",
-                          })}
-                        </span>
-                      </p>
+                      <div key={p.id} className="flex gap-4 items-center">
+                        <p className="font-bold text-slate-700">
+                          TOTAL:{" "}
+                          <span className="text-indigo-500 font-normal">
+                            {Number(p?.total).toLocaleString("es-AR", {
+                              style: "currency",
+                              currency: "ARS",
+                            })}
+                          </span>
+                        </p>
+
+                        <div>
+                          <button
+                            onClick={() => {
+                              handleId(p.id), openModalEdit();
+                            }}
+                            className="bg-indigo-500/10 text-indigo-600  py-1 px-6 rounded-lg border-[1px] border-indigo-600 text-sm"
+                            type="button"
+                          >
+                            Editar
+                          </button>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -114,6 +144,11 @@ export const ModalPresupuesto = () => {
             isOpenCrear={isOpenCrear}
             openModalCrear={openModalCrear}
             closeModalCrear={closeModalCrear}
+          />
+          <ModalEditarPresupuesto
+            obtenerId={obtenerId}
+            isOpenEdit={isOpenEdit}
+            closeModalEdit={closeModalEdit}
           />
         </Dialog>
       </Transition>

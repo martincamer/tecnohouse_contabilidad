@@ -7,11 +7,12 @@ import { Register } from "./routes/pages/Register";
 import { Home } from "./routes/pages/protected/Home";
 import { SideBar } from "./components/sidebar/Sidebar";
 import { GenerarDatos } from "./routes/pages/protected/GenerarDatos";
+import { PresupuestosProvider } from "./context/PresupuestosProvider";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { PresupuestosProvider } from "./context/PresupuestosProvider";
+import { IngresosProvider } from "./context/IngresosProvider";
 
 function App() {
   const { isAuth } = useAuth();
@@ -32,10 +33,12 @@ function App() {
             <Route
               element={
                 <PresupuestosProvider>
-                  <main className="flex gap-2 h-full">
-                    <SideBar />
-                    <Outlet />
-                  </main>
+                  <IngresosProvider>
+                    <main className="flex gap-2 h-full">
+                      <SideBar />
+                      <Outlet />
+                    </main>
+                  </IngresosProvider>
                 </PresupuestosProvider>
               }
             >
