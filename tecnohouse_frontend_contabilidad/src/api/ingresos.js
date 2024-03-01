@@ -4,6 +4,9 @@ export const crearIngresoNuevo = (data) => axios.post("/ingresos", data);
 
 export const obtenerIngreso = () => axios.get("/ingresos");
 
+export const obtenerIngresoRangoFechas = (fechaInicio, fechaFin) =>
+  axios.post("/ingresos/rango-fechas", fechaInicio, fechaFin);
+
 export const obtenerIngresoMensual = () => axios.get("/ingresos-mes");
 
 export const editarIngreso = (obtenerParams, data) =>

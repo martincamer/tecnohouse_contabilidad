@@ -20,6 +20,7 @@ export const IngresosProvider = ({ children }) => {
   const [ingresoMensual, setIngresoMensual] = useState([]);
   const [isOpenIngresos, setIsOpenIngresos] = useState(false);
   const [isOpenEditarIngresos, setIsOpenEditarIngresos] = useState(false);
+  const [isOpenEditarIngresosTwo, setIsOpenEditarIngresosTwo] = useState(false);
 
   const openModalIngresos = () => {
     setIsOpenIngresos(true);
@@ -35,6 +36,14 @@ export const IngresosProvider = ({ children }) => {
 
   const closeModalEditar = () => {
     setIsOpenEditarIngresos(false);
+  };
+
+  const openModalEditarTwo = () => {
+    setIsOpenEditarIngresosTwo(true);
+  };
+
+  const closeModalEditarTwo = () => {
+    setIsOpenEditarIngresosTwo(false);
   };
 
   useEffect(() => {
@@ -88,6 +97,9 @@ export const IngresosProvider = ({ children }) => {
         resultadosFiltrados,
         handleBusquedaChange,
         busqueda,
+        isOpenEditarIngresosTwo,
+        openModalEditarTwo,
+        closeModalEditarTwo,
       }}
     >
       {children}

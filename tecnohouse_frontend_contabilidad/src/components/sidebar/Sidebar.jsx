@@ -69,7 +69,7 @@ export const SideBar = () => {
                     </svg>
 
                     <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                      Home
+                      Inicio
                     </span>
                   </a>
                 </Link>
@@ -100,6 +100,32 @@ export const SideBar = () => {
                   </a>
                 </Link>
 
+                <Link to={"estadistica"}>
+                  <a
+                    href="#"
+                    className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z"
+                      />
+                    </svg>
+
+                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                      Estadistica
+                    </span>
+                  </a>
+                </Link>
+
                 <Link to={"/generar-recibos"}>
                   <a
                     href="#"
@@ -121,12 +147,37 @@ export const SideBar = () => {
                     </svg>
 
                     <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
-                      Generar Recibos
+                      Ver Recibos Mensuales
+                    </span>
+                  </a>
+                </Link>
+                <Link to={"/estadistica-recibos"}>
+                  <a
+                    href="#"
+                    className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
+                      />
+                    </svg>
+
+                    <span className="invisible absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white group-hover:visible">
+                      Ver estadisticas mensuales
                     </span>
                   </a>
                 </Link>
 
-                <li>
+                <Link to={"/cuenta"}>
                   <a
                     href="#"
                     className="group relative flex justify-center rounded px-2 py-1.5 text-gray-500 hover:bg-gray-50 hover:text-gray-700"
@@ -150,7 +201,7 @@ export const SideBar = () => {
                       Cuenta
                     </span>
                   </a>
-                </li>
+                </Link>
               </ul>
             </div>
           </div>
@@ -216,12 +267,30 @@ export const SideBar = () => {
                 </a>
               </Link>
 
+              <Link to={"/estadistica"}>
+                <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                >
+                  Estadistica
+                </a>
+              </Link>
+
               <Link to={"/generar-recibos"}>
                 <a
                   href="#"
                   className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                 >
-                  Generar Recibos
+                  Ver Recibos Mensuales
+                </a>
+              </Link>
+
+              <Link to={"/estadistica-recibos"}>
+                <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                >
+                  Ver Estadisticas Mensuales
                 </a>
               </Link>
 

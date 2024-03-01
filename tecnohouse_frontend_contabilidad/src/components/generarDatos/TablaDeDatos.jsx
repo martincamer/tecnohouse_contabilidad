@@ -29,29 +29,32 @@ export const TablaDeDatos = ({
   };
 
   return (
-    <div className="h-full w-full">
-      <table className="w-full">
+    <div className="overflow-x-auto rounded-lg border border-gray-200 mt-5">
+      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
         <thead>
           <tr className="border-b-[1px]">
-            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Numero
             </th>
-            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Tipo
             </th>
-            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Detalle
             </th>
-            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+              Creador
+            </th>
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Ingreso
             </th>
-            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Total
             </th>
-            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Editar
             </th>
-            <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
+            <th className="py-4 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
               Ver
             </th>
             <th className="py-2 px-2 font-normal uppercase text-sm text-indigo-600 text-left">
@@ -59,11 +62,11 @@ export const TablaDeDatos = ({
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-gray-200 text-left">
           {currentResults.map((i) => (
             <tr
               key={i.id}
-              className="border-b-[1px] hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
+              className=" hover:bg-slate-100 transition-all ease-in-out duration-200 cursor-pointer"
             >
               <td className="py-3 px-3 text-sm text-left text-slate-700">
                 {i.id}
@@ -73,6 +76,9 @@ export const TablaDeDatos = ({
               </td>
               <td className="py-3 px-3 text-sm text-left text-slate-700 capitalize">
                 {i.detalle}
+              </td>
+              <td className="py-3 px-3 text-sm text-left text-slate-700 capitalize">
+                {i.usuario}
               </td>
               <td className="py-3 px-3 text-sm text-left text-slate-700">
                 {Number(i?.total).toLocaleString("es-AR", {

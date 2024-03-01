@@ -8,13 +8,18 @@ import { Home } from "./routes/pages/protected/Home";
 import { SideBar } from "./components/sidebar/Sidebar";
 import { GenerarDatos } from "./routes/pages/protected/GenerarDatos";
 import { PresupuestosProvider } from "./context/PresupuestosProvider";
+import { IngresosProvider } from "./context/IngresosProvider";
+import { TiposProvider } from "./context/TiposProvider";
+import { ViewPdf } from "./components/pdf/ViewPdf";
+import { GenerarRecibos } from "./routes/pages/protected/GenerarRecibos";
+import { Cuenta } from "./routes/pages/protected/Cuenta";
+import { Estadistica } from "./routes/pages/protected/Estadistica";
+import { GenerarRecibosEstadistica } from "./routes/pages/protected/GenerarRecibosEstadistica";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { IngresosProvider } from "./context/IngresosProvider";
-import { TiposProvider } from "./context/TiposProvider";
-import { ViewPdf } from "./components/pdf/ViewPdf";
+import { NavbarStatick } from "./components/ui/NavbarStatick";
 
 function App() {
   const { isAuth } = useAuth();
@@ -22,6 +27,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <NavbarStatick />
         <Routes>
           <Route
             element={<RutaProtegida isAllowed={!isAuth} redirectTo={"/pm"} />}
@@ -48,6 +54,13 @@ function App() {
             >
               <Route index path="/" element={<Home />} />
               <Route path="/generar-datos" element={<GenerarDatos />} />
+              <Route path="/generar-recibos" element={<GenerarRecibos />} />
+              <Route path="/estadistica" element={<Estadistica />} />
+              <Route
+                path="/estadistica-recibos"
+                element={<GenerarRecibosEstadistica />}
+              />
+              <Route path="/cuenta" element={<Cuenta />} />
               <Route path="/view-pdf" element={<ViewPdf />} />
             </Route>
           </Route>

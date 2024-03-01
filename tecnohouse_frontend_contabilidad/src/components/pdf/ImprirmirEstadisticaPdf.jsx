@@ -77,7 +77,11 @@ const meses = [
 // Formatear la fecha
 const fechaFormateada = `${diasSemana[diaDeLaSemana]} ${meses[mes]} / ${diaDelMes} / ${ano}`;
 
-export const ImprimirPdf = ({ ingresoMensual, presupuestoMensual }) => {
+export const ImprimirEstadisticaPdf = ({
+  ingresoMensual,
+  presupuestoMensual,
+  diferenciaPorTipo,
+}) => {
   // Mostrar la fecha formateada
   console.log("Fecha actual:", fechaFormateada);
 
@@ -125,7 +129,7 @@ export const ImprimirPdf = ({ ingresoMensual, presupuestoMensual }) => {
           <Text
             style={{
               textTransform: "capitalize",
-              fontSize: "13px",
+              fontSize: "11px",
               fontFamily: "Montserrat",
               fontWeight: "light",
             }}
@@ -152,7 +156,7 @@ export const ImprimirPdf = ({ ingresoMensual, presupuestoMensual }) => {
               fontFamily: "Montserrat",
             }}
           >
-            Presupuesto Mensual
+            Presupusto mensual estimado
           </Text>
           {presupuestoMensual?.map((presupuesto) => (
             <Text
@@ -184,7 +188,7 @@ export const ImprimirPdf = ({ ingresoMensual, presupuestoMensual }) => {
               fontFamily: "Montserrat",
             }}
           >
-            Ingresos de la aplicación
+            Estadistica presupuesto / mes
           </Text>
           <View
             style={{
@@ -193,7 +197,7 @@ export const ImprimirPdf = ({ ingresoMensual, presupuestoMensual }) => {
               gap: "20px",
             }}
           >
-            {ingresoMensual?.map((presupuesto) => (
+            {ingresoMensual?.map((presupuesto, index) => (
               <View
                 style={{
                   display: "flex",
@@ -209,6 +213,7 @@ export const ImprimirPdf = ({ ingresoMensual, presupuestoMensual }) => {
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
                   <Text
@@ -219,28 +224,83 @@ export const ImprimirPdf = ({ ingresoMensual, presupuestoMensual }) => {
                       textTransform: "capitalize",
                     }}
                   >
-                    {presupuesto.detalle}
+                    {presupuesto.tipo}
                   </Text>
-                  <Text
+                  <View
                     style={{
-                      fontFamily: "Montserrat",
-                      fontWeight: "semibold",
-                      fontSize: "9px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: "5px",
                     }}
                   >
-                    Fecha: {convertirFecha(presupuesto.created_at)}
-                  </Text>
+                    <Text
+                      style={{
+                        fontFamily: "Montserrat",
+                        fontWeight: "bold",
+                        fontSize: "10px",
+                        textTransform: "capitalize",
+                        borderBottom: "1px solid #000",
+                      }}
+                    >
+                      Diferencia
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "Montserrat",
+                        fontWeight: "normal",
+                        fontSize: "8px",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {new Intl.NumberFormat("es-AR", {
+                        style: "currency",
+                        currency: "ARS",
+                      })?.format(diferenciaPorTipo[index]?.diferencia)}
+                    </Text>
+                  </View>
                 </View>
                 <Text
                   style={{
-                    fontSize: "12px",
+                    fontSize: "9px",
                     fontWeight: "normal",
+                    fontFamily: "Montserrat",
                   }}
                   key={presupuesto?.id}
-                >{`${Number(presupuesto?.total).toLocaleString("es-AR", {
-                  style: "currency",
-                  currency: "ARS",
-                })}`}</Text>
+                >
+                  <Text
+                    style={{
+                      fontSize: "9px",
+                      fontWeight: "bold",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    Total
+                  </Text>{" "}
+                  {`${Number(presupuesto?.total).toLocaleString("es-AR", {
+                    style: "currency",
+                    currency: "ARS",
+                  })}`}
+                </Text>
+                <Text
+                  style={{
+                    fontSize: "9px",
+                    fontWeight: "normal",
+                    fontFamily: "Montserrat",
+                  }}
+                  key={presupuesto?.id}
+                >
+                  <Text
+                    style={{
+                      fontSize: "9px",
+                      fontWeight: "bold",
+                      fontFamily: "Montserrat",
+                    }}
+                  >
+                    Porcentaje
+                  </Text>{" "}
+                  {`${(presupuesto.porcentaje * 100).toFixed(2)}%`}
+                </Text>
               </View>
             ))}
           </View>

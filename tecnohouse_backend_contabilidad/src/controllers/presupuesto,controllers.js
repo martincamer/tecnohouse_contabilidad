@@ -86,3 +86,21 @@ export const getPresupuestoMesActual = async (req, res, next) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
+
+// En tu controlador poniendo el mes
+export const getPresupuestoPorMes = async (req, res, next) => {
+  try {
+    const { mes } = req.params;
+
+    // Ajuste de zona horaria UTC y filtro por mes
+    const result = await pool.query(
+      "SELECT * FROM presupuesto WHERE EXTRACT(MONTH FROM created_at) = $1",
+      [mes]
+    );
+
+    return res.json(result.rows);
+  } catch (error) {
+    console.error("Error al obtener presupuestos:", error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};

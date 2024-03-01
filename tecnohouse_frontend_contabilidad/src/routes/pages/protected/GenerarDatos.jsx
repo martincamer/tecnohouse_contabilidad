@@ -34,6 +34,38 @@ export const GenerarDatos = () => {
 
   const [obtenerIdTwo, setObtenerIdTwo] = useState([]);
 
+  // console.log("ingresoMensual", ingresoMensual);
+
+  // Consolidar ingresos por tipo y sumar los totales
+  const ingresosConsolidados = ingresoMensual.reduce((consolidado, ingreso) => {
+    if (!consolidado[ingreso.tipo]) {
+      consolidado[ingreso.tipo] = {
+        tipo: ingreso.tipo,
+        total: 0,
+      };
+    }
+    consolidado[ingreso.tipo].total += parseInt(ingreso.total, 10);
+    return consolidado;
+  }, {});
+
+  const totalGlobal = Object.values(ingresosConsolidados).reduce(
+    (total, ingreso) => total + ingreso.total,
+    0
+  );
+
+  // Distribuir el total global en porcentajes
+  const porcentajeDistribucion = 0.4; // 40%
+  const ingresosDistribuidos = Object.values(ingresosConsolidados).map(
+    (ingreso) => ({
+      ...ingreso,
+      porcentaje: (ingreso.total / totalGlobal) * porcentajeDistribucion,
+    })
+  );
+
+  console.log("Ingresos Consolidados 1:", ingresosConsolidados);
+  console.log("Total Global 2:", totalGlobal);
+  console.log("Ingresos Distribuidos 3:", ingresosDistribuidos);
+
   return (
     <section className="px-10 py-16 w-full h-full flex flex-col gap-5">
       <Link

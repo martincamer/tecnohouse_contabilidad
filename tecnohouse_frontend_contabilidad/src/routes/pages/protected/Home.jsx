@@ -1,5 +1,6 @@
 import { ChartComponent } from "../../../components/home/ChartComponent";
 import { ChartComponentTwo } from "../../../components/home/ChartComponentColumn";
+import { ChartComponentColumnTwo } from "../../../components/home/ChartComponentColumnTwo";
 import { ChartComponentTree } from "../../../components/home/ChartComponentTree";
 import { DatosComponent } from "../../../components/home/DatosComponent";
 import { FechaComponent } from "../../../components/home/FechaComponent";
@@ -50,6 +51,88 @@ export const Home = () => {
     0
   );
 
+  // Consolidar ingresos por tipo y sumar los totales
+  const ingresosConsolidados = ingresoMensual.reduce((consolidado, ingreso) => {
+    if (!consolidado[ingreso.tipo]) {
+      consolidado[ingreso.tipo] = {
+        tipo: ingreso.tipo,
+        total: 0,
+      };
+    }
+    consolidado[ingreso.tipo].total += parseInt(ingreso.total, 10);
+    return consolidado;
+  }, {});
+
+  const totalGlobal = Object.values(ingresosConsolidados).reduce(
+    (total, ingreso) => total + ingreso.total,
+    0
+  );
+
+  // Distribuir el total global en porcentajes
+  // const porcentajeDistribucion = 0.4; // 40%
+  const ingresosDistribuidos = Object.values(ingresosConsolidados).map(
+    (ingreso) => ({
+      ...ingreso,
+      porcentaje: ingreso.total / totalGlobal /** porcentajeDistribucion*/,
+    })
+  );
+
+  // Calculamos los ingresos por tipo
+  const ingresosPorTipo = ingresoMensual.reduce((acumulador, ingreso) => {
+    const tipo = ingreso.tipo;
+    const total = parseInt(ingreso.total, 10);
+
+    if (!acumulador[tipo]) {
+      acumulador[tipo] = 0;
+    }
+
+    acumulador[tipo] += total;
+
+    return acumulador;
+  }, {});
+
+  // Calculamos el total de ingresos mensuales
+  const ingresoMensualTotal = Object.values(ingresosPorTipo).reduce(
+    (total, tipoTotal) => {
+      return total + tipoTotal;
+    },
+    0
+  );
+
+  const presupuestoMensualTotal = presupuestoMensual.reduce(
+    (total, presupuesto) => total + parseInt(presupuesto.total, 10),
+    0
+  );
+
+  // Calculamos la diferencia por tipo
+  const diferenciaPorTipo = Object.entries(ingresosPorTipo).map(
+    ([tipo, totalIngresoTipo]) => {
+      const totalPresupuestoTipo =
+        (totalIngresoTipo / ingresoMensualTotal) * presupuestoMensualTotal;
+      const diferencia = totalPresupuestoTipo - totalIngresoTipo;
+
+      return { tipo, diferencia };
+    }
+  );
+
+  console.log("Diferencia por tipo:", diferenciaPorTipo);
+
+  const formatoMoneda = new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+  });
+
+  const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
+  const datosFormateados = ingresosDistribuidos.map((item, index) => ({
+    tipo: capitalize(item.tipo),
+    total: item.total,
+    porcentaje: item.porcentaje * 100, // Mantenlo como número
+    diferencia: diferenciaPorTipo[index].diferencia,
+  }));
+
   return (
     <section className="w-full h-full py-12 px-12 max-md:px-4 flex flex-col gap-20">
       <div className="grid grid-cols-5 gap-4 border-[1px] shadow-md rounded py-5 px-10">
@@ -91,7 +174,10 @@ export const Home = () => {
             </svg>
           }
           title="Total final"
-          total={"$100.000.000"}
+          total={Number(totalIngreso).toLocaleString("es-AR", {
+            style: "currency",
+            currency: "ARS",
+          })}
         />
         <FechaComponent
           icono={
@@ -158,9 +244,16 @@ export const Home = () => {
           })}
         />
       </div>
-      <ChartComponent />
-      <ChartComponentTwo />
-      <ChartComponentTree />
+      <div className="bg-slate-100/50 rounded-lg py-10 px-3 border-slate-300 border-[1px]">
+        <ChartComponent />
+      </div>{" "}
+      <div className="flex gap-5 bg-slate-100/50 rounded-lg py-10 px-3 border-slate-300 border-[1px]">
+        <ChartComponentTwo datosFormateados={datosFormateados} />
+        <ChartComponentTree />
+      </div>
+      <div className=" bg-slate-100/50 rounded-lg py-10 px-3 border-slate-300 border-[1px]">
+        <ChartComponentColumnTwo datosFormateados={datosFormateados} />
+      </div>
     </section>
   );
 };

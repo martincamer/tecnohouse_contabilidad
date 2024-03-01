@@ -7,20 +7,29 @@ import {
   getIngreso,
   getIngresoMesActual,
   getIngresos,
+  getIngresoPorRangoDeFechas,
 } from "../controllers/ingresos.controllers.js";
+import { isAdmin } from "../middlewares/ingresos.middleware.js";
 
 const router = Router();
 
-router.get("/ingresos", isAuth, getIngresos);
+router.get("/ingresos", isAuth, isAdmin, getIngresos);
 
-router.get("/ingresos-mes", isAuth, getIngresoMesActual);
+router.get("/ingresos-mes", isAuth, isAdmin, getIngresoMesActual);
 
-router.get("/ingresos/:id", isAuth, getIngreso);
+router.post(
+  "/ingresos/rango-fechas",
+  isAuth,
+  isAdmin,
+  getIngresoPorRangoDeFechas
+);
 
-router.post("/ingresos", isAuth, createIngreso);
+router.get("/ingresos/:id", isAuth, isAdmin, getIngreso);
 
-router.put("/ingresos/:id", isAuth, actualizarIngreso);
+router.post("/ingresos", isAuth, isAdmin, createIngreso);
 
-router.delete("/ingresos/:id", isAuth, eliminarIngreso);
+router.put("/ingresos/:id", isAuth, isAdmin, actualizarIngreso);
+
+router.delete("/ingresos/:id", isAuth, isAdmin, eliminarIngreso);
 
 export default router;

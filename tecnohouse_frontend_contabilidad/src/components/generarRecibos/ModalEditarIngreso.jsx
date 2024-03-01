@@ -6,7 +6,7 @@ import { useIngresosContext } from "../../context/IngresosProvider";
 import { editarIngreso, obtenerUnicoIngreso } from "../../api/ingresos";
 import { useTipoContext } from "../../context/TiposProvider";
 
-export const ModalEditarIngreso = ({ obtenerId }) => {
+export const ModalEditarIngreso = ({ obtenerId, setDatos, datos }) => {
   const {
     register,
     handleSubmit,
@@ -15,12 +15,7 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
     formState: { errors },
   } = useForm();
 
-  const {
-    isOpenEditarIngresos,
-    closeModalEditar,
-    setIngresoMensual,
-    ingresoMensual,
-  } = useIngresosContext();
+  const { isOpenEditarIngresosTwo, closeModalEditarTwo } = useIngresosContext();
 
   const { tipos } = useTipoContext();
 
@@ -36,30 +31,30 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
 
       const res = await editarIngreso(obtenerId, data);
 
-      const tipoExistenteIndex = ingresoMensual.findIndex(
+      const tipoExistenteIndexTwo = datos.findIndex(
         (tipo) => tipo.id === obtenerId
       );
 
-      setIngresoMensual((prevTipos) => {
+      setDatos((prevTipos) => {
         const newTipos = [...prevTipos];
         const updatedTipo = JSON.parse(res.config.data); // Convierte el JSON a objeto
         const updatedDetalle = JSON.parse(res.config.data); // Convierte el JSON a objeto
         const updatedTotal = JSON.parse(res.config.data); // Convierte el JSON a objeto
 
-        newTipos[tipoExistenteIndex] = {
+        newTipos[tipoExistenteIndexTwo] = {
           id: obtenerId,
           tipo: updatedTipo.tipo,
           detalle: updatedDetalle.detalle,
           total: updatedTotal.total,
-          created_at: newTipos[tipoExistenteIndex].created_at,
-          updated_at: newTipos[tipoExistenteIndex].updated_at,
+          created_at: newTipos[tipoExistenteIndexTwo].created_at,
+          updated_at: newTipos[tipoExistenteIndexTwo].updated_at,
         };
         console.log("Estado después de la actualización:", newTipos);
         return newTipos;
       });
 
       setTimeout(() => {
-        closeModalEditar();
+        closeModalEditarTwo();
       }, 500);
 
       toast.success("Ingreso editado correctamente!", {
@@ -96,11 +91,11 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
 
   return (
     <Menu as="div" className="z-50">
-      <Transition appear show={isOpenEditarIngresos} as={Fragment}>
+      <Transition appear show={isOpenEditarIngresosTwo} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModalEditar}
+          onClose={closeModalEditarTwo}
         >
           <Transition.Child
             as={Fragment}
@@ -230,7 +225,7 @@ export const ModalEditarIngreso = ({ obtenerId }) => {
                   <button
                     type="button"
                     className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300 cursor-pointer max-md:text-xs"
-                    onClick={closeModalEditar}
+                    onClick={closeModalEditarTwo}
                   >
                     Cerrar Ventana
                   </button>

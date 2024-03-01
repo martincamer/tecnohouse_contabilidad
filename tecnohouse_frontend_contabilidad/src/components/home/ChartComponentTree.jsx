@@ -43,12 +43,13 @@ export const ChartComponentTree = () => {
 
   return (
     <BarChart
-      width={1220}
+      width={660}
       height={500}
       style={{
-        padding: "10px",
+        padding: "10px 20px",
         margin: "0 auto",
         cursor: "pointer",
+        width: "100%",
       }}
       data={datosFormateados}
     >

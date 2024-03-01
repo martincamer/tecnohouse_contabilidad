@@ -7,3 +7,17 @@
 body {
   font-family: "Roboto", sans-serif;
 }
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-blink {
+  animation: blink 1.5s infinite;
+}

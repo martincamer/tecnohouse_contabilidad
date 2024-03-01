@@ -5,22 +5,26 @@ import {
   eliminarGasto,
   getPresupuesto,
   getPresupuestoMesActual,
+  getPresupuestoPorMes,
   getPresupuestos,
 } from "../controllers/presupuesto,controllers.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
+import { isAdmin } from "../middlewares/ingresos.middleware.js";
 
 const router = Router();
 
-router.get("/presupuestos", isAuth, getPresupuestos);
+router.get("/presupuestos", isAuth, isAdmin, getPresupuestos);
 
-router.get("/presupuestos-mes", isAuth, getPresupuestoMesActual);
+router.get("/presupuestos-mes", isAuth, isAdmin, getPresupuestoMesActual);
 
-router.get("/presupuestos/:id", isAuth, getPresupuesto);
+router.get("/presupuestos/:id", isAuth, isAdmin, getPresupuesto);
 
-router.post("/presupuestos", isAuth, createPresupuesto);
+router.post("/presupuestos", isAuth, isAdmin, createPresupuesto);
 
-router.put("/presupuestos/:id", isAuth, actualizarPresupuesto);
+router.put("/presupuestos/:id", isAuth, isAdmin, actualizarPresupuesto);
 
-router.delete("/presupuestos/:id", isAuth, eliminarGasto);
+router.delete("/presupuestos/:id", isAuth, isAdmin, eliminarGasto);
+
+router.get("/presupuesto/mes/:mes", isAuth, isAdmin, getPresupuestoPorMes);
 
 export default router;

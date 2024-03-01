@@ -23,20 +23,14 @@ const formatoMoneda = new Intl.NumberFormat("es-AR", {
 
 const formatoNumero = new Intl.NumberFormat("es-AR");
 
-export const ChartComponentTwo = ({ datosFormateados }) => {
+export const ChartComponentColumnTwo = ({ datosFormateados }) => {
   return (
     <BarChart
-      width={620}
+      width={1220}
       height={500}
-      // className="w-full mx-auto"
+      className="w-full mx-auto"
       data={datosFormateados}
-      // margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-      style={{
-        padding: "10px 20px",
-        margin: "0 auto",
-        cursor: "pointer",
-        width: "100%",
-      }}
+      margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="tipo" />
@@ -58,6 +52,11 @@ export const ChartComponentTwo = ({ datosFormateados }) => {
           formatter: (valor) => `${Number(valor).toFixed(2)}%`,
           position: "top",
         }}
+      />
+      <Bar
+        dataKey="diferencia"
+        name="Diferencia presupuesto estimado"
+        fill="#f87171"
       />
     </BarChart>
   );
