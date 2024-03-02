@@ -12,7 +12,6 @@ export const obtenerIngresoMensual = () => axios.get("/ingresos-mes");
 export const editarIngreso = (obtenerParams, data) =>
   axios.put(`/ingresos/${obtenerParams}`, data);
 
-export const obtenerUnicoIngreso = (obtenerParams) =>
-  axios.get(`/ingresos/${obtenerParams}`);
+export const obtenerUnicoIngreso = (id) => axios.get(`/ingresos/${id}`);
 
 export const eliminarIngreso = (id) => axios.delete(`/ingresos/${id}`);

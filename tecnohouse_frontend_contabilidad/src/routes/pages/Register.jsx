@@ -1,7 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/AuthProvider";
-import img from "../../../public/06.jpg";
+import { Label } from "../../components/formularios/Label";
+import { Input } from "../../components/formularios/Input";
+import { InputPassword } from "../../components/formularios/InputPassword";
+import { Button } from "../../components/formularios/Button";
 
 export const Register = () => {
   const { signup, error } = useAuth();
@@ -23,99 +26,76 @@ export const Register = () => {
   });
 
   return (
-    <section
-      style={{
-        backgroundImage: `url(${img})`,
-        height: "100vh",
-        backgroundSize: "cover",
-      }}
-      className="flex justify-center items-center"
-    >
+    <section className="flex items-center justify-center gap-12 h-screen  bg-slate-100 flex-col relative">
+      <div className="absolute top-10 left-10 ">
+        <img className="h-[100px]" src={"./logoempresa.png"} />
+      </div>
+
+      {/* <div className="h-[300px] rounded-full absolute top-10 left-[300px] w-[300px] bg-indigo-700 shadow-lg"></div> */}
       <form
         onSubmit={onSubmit}
-        className="bg-white py-20 px-10 w-1/3 rounded-xl shadow-lg shadow-black/30 relative"
+        className="flex w-1/4 flex-col gap-4 bg-slate-300 px-10 py-10 rounded-lg shadow-md shadow-gray-500/40"
       >
-        <div className="text-2xl font-extrabold text-white bg-red-500 rounded-lg absolute top-[-16px] left-[35%] p-2">
-          Software Group
+        <div className="text-lg text-slate-700 w-full text-center">
+          Registro de usuario
+        </div>
+        {
+          <div>
+            <div className="flex flex-col gap-1">
+              {error?.map((e) => (
+                <span className="bg-red-500/10 rounded-lg px-2 py-1 text-red-600 text-sm border-[1px] border-red-500/30">
+                  {e}
+                </span>
+              ))}
+            </div>
+          </div>
+        }
+        <div className="flex flex-col gap-2">
+          <Label label="Email del registro" />
+          <Input
+            register={register}
+            placeholder={"emailregistro@email.com"}
+            type={"email"}
+          />
         </div>
 
-        <div className="space-y-2 mb-3">
-          {error &&
-            error.map((err) => (
-              <p className="text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-2/3 mx-auto text-center border-[1px] border-red-200">
-                {err}
-              </p>
-            ))}
-          <p className="text-lg text-center font-semibold">
-            ¡Registrate para empezar tu comienzo en la App!
-          </p>
+        <div className="flex flex-col gap-2">
+          <Label label="Usuario" />
+          <Input
+            register={register}
+            placeholder={"@Usuario"}
+            type={"username"}
+          />
         </div>
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-col gap-2">
-            <label className="text-lg font-bold">Nombre De Usuario</label>
-            <input
-              {...register("username", { required: true })}
-              type="text"
-              placeholder="Escribe tu username"
-              className="bg-gray-200 rounded-lg shadow-md shadow-black/30 py-3 px-2 placeholder:text-black/50 outline-none"
-            />
-            {errors.username && (
-              <span className="text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/3 text-center shadow border-[1px] border-red-200">
-                El username es requerido
-              </span>
-            )}
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-lg font-bold">Email</label>
-            <input
-              {...register("email", { required: true })}
-              type="text"
-              placeholder="Escribe tu @Email"
-              className="bg-gray-200 rounded-lg shadow-md shadow-black/30 py-3 px-2 placeholder:text-black/50 outline-none"
-            />
-            {errors.email && (
-              <span className="text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/3 text-center shadow border-[1px] border-red-200">
-                El email es requerido
-              </span>
-            )}
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-lg font-bold">Password</label>
-            <input
-              {...register("password", { required: true })}
-              type="password"
-              placeholder="Escribe una contraseña segura"
-              className="bg-gray-200 rounded-lg shadow-md shadow-black/30 py-3 px-2 placeholder:text-black/50 outline-none"
-            />
-            {errors.password && (
-              <span className="text-sm bg-red-100 text-red-600 py-2 px-2 rounded w-1/3 text-center shadow border-[1px] border-red-200">
-                El password es requerido
-              </span>
-            )}
-          </div>
-          <div className="">
-            <input
-              value="Registrarse"
-              type="submit"
-              className="bg-blue-500 text-white rounded-lg hover:shadow-md hover:shadow-black/30 hover:translate-x-1 transition-all ease-in-out py-3 px-4 text-center outline-none cursor-pointer"
-            />
-          </div>
-          <div className="flex justify-between text-sm font-semibold">
-            <Link
-              className="hover:underline transition-all ease-in-out"
-              to={"/password-change"}
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
-            <Link
-              className="hover:underline transition-all ease-in-out"
-              to={"/login"}
-            >
-              ¿Ya tienes una cuenta? Ingresar ahora.
-            </Link>
-          </div>
+
+        {/* <div className="flex flex-col gap-2">
+          <Label label="Rol" />
+          <Input
+            register={register}
+            placeholder={"1 admin - 2 user"}
+            type={"role_id"}
+          />
+        </div> */}
+
+        <div className="flex flex-col gap-2">
+          <Label label="Contraseña" />
+          <InputPassword register={register} type={"password"} />
         </div>
+
+        <Button type={"submit"} titulo={"Registrar Usuario"} />
       </form>
+
+      {/* <svg
+        className="absolute bottom-[-150px]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+      >
+        <path
+          fill="#6366F1"
+          fill-opacity="1"
+          d="M0,192L48,170.7C96,149,192,107,288,85.3C384,64,480,64,576,90.7C672,117,768,171,864,170.7C960,171,1056,117,1152,80C1248,43,1344,21,1392,10.7L1440,0L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+        ></path>
+      </svg> */}
     </section>
   );
 };

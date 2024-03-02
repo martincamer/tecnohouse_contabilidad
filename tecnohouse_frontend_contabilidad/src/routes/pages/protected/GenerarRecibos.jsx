@@ -207,9 +207,9 @@ export const GenerarRecibos = () => {
       <div className="flex gap-2 items-center">
         <label className="text-sm text-indigo-500">Mes</label>
         <input
-          className="text-sm bg-slate-100 py-1 px-2 rounded-lg shadow border-slate-300 border-[1px] cursor-pointer text-slate-700 outline-none"
+          className="text-sm bg-slate-100 py-1 px-2 rounded-lg shadow border-slate-300 border-[1px] cursor-pointer text-slate-700 outline-none w-1/5"
           type="text"
-          placeholder="Escribe el nombre del mes (ej. enero)"
+          placeholder="Escribe un numero del mes (ej. 2: febrero)"
           value={mes}
           onChange={(e) => setMes(e.target.value)}
         />

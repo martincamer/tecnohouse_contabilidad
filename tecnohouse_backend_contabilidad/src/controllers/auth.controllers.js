@@ -242,8 +242,6 @@ export const getUserById = async (req, res) => {
   }
 };
 
-
-
 export const deleteUserById = async (req, res) => {
   const userId = req.params.id;
 

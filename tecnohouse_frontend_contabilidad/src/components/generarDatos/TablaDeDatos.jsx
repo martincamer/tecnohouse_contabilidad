@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useIngresosContext } from "../../context/IngresosProvider";
+import { Link } from "react-router-dom";
 
 export const TablaDeDatos = ({
   handleId,
@@ -117,10 +118,10 @@ export const TablaDeDatos = ({
                   </svg>
                 </button>
               </td>
-              <td className="py-3 px-3 text-sm text-left text-slate-700">
-                <button
-                  type="button"
-                  className="bg-slate-500/10 border-[1px] border-slate-500 py-1 px-3 rounded-lg text-left text-slate-700 flex gap-2 items-center"
+              <td className="py-3 px-3 text-sm text-left text-slate-700 flex items-start">
+                <Link
+                  to={`/view-ingreso/${i?.id}`}
+                  className=" bg-slate-500/10 border-[1px] border-slate-500 py-1 px-3 rounded-lg text-left text-slate-700 flex gap-2 items-center"
                 >
                   Ver ingreso
                   <svg
@@ -137,7 +138,7 @@ export const TablaDeDatos = ({
                       d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
                     />
                   </svg>
-                </button>
+                </Link>
               </td>
 
               <td className="py-3 px-3 text-sm text-left text-slate-700">

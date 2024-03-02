@@ -15,11 +15,12 @@ import { GenerarRecibos } from "./routes/pages/protected/GenerarRecibos";
 import { Cuenta } from "./routes/pages/protected/Cuenta";
 import { Estadistica } from "./routes/pages/protected/Estadistica";
 import { GenerarRecibosEstadistica } from "./routes/pages/protected/GenerarRecibosEstadistica";
+import { NavbarStatick } from "./components/ui/NavbarStatick";
+import { ViewIngreso } from "./routes/pages/protected/ViewIngreso";
 //import normales
 import RutaProtegida from "./layouts/RutaProtejida";
 import "react-toastify/dist/ReactToastify.css";
 import "react-toastify/dist/ReactToastify.min.css";
-import { NavbarStatick } from "./components/ui/NavbarStatick";
 
 function App() {
   const { isAuth } = useAuth();
@@ -30,7 +31,7 @@ function App() {
         <NavbarStatick />
         <Routes>
           <Route
-            element={<RutaProtegida isAllowed={!isAuth} redirectTo={"/pm"} />}
+            element={<RutaProtegida isAllowed={!isAuth} redirectTo={"/"} />}
           >
             <Route index path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -61,7 +62,8 @@ function App() {
                 element={<GenerarRecibosEstadistica />}
               />
               <Route path="/cuenta" element={<Cuenta />} />
-              <Route path="/view-pdf" element={<ViewPdf />} />
+              <Route path="/view-pdf/:id" element={<ViewPdf />} />
+              <Route path="/view-ingreso/:id" element={<ViewIngreso />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

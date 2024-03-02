@@ -67,9 +67,11 @@ export const IntroActual = () => {
   console.log("Fecha actual:", fechaFormateada);
 
   return (
-    <div className="bg-slate-300 w-full py-10 px-6 border-[1px] border-slate-300 shadow-sm shadow-slate-400 rounded-lg flex gap-4 items-center">
-      <div className="bg-white px-4 py-2 rounded-lg shadow flex flex-col gap-1 w-full h-full">
-        <p className="text-indigo-500 text-sm">Total del presupuesto</p>
+    <div className="bg-slate-100 w-full border-[1px] border-slate-300 shadow-sm shadow-slate-400 rounded-lg flex gap-4 items-center justify-center">
+      <div className="py-8 px-6 flex flex-col justify-center items-center gap-1 w-full h-full border-r-[1px] border-slate-300">
+        <p className="text-indigo-500 text-sm">
+          Total del presupuesto estimado
+        </p>
         {presupuestoMensual.map((p) => (
           <p className="text-slate-700 text-sm font-semibold">
             {Number(p?.total).toLocaleString("es-AR", {
@@ -80,7 +82,7 @@ export const IntroActual = () => {
         ))}
       </div>
 
-      <div className="bg-white px-4 py-2 rounded-lg shadow flex flex-col gap-1 w-full h-full">
+      <div className="py-5 px-6 flex flex-col justify-center items-center gap-1 w-full h-full border-r-[1px] border-slate-300">
         <p className="text-indigo-500 text-sm">
           Gastos del mes{" "}
           <span className="text-slate-700 capitalize">{fechaFormateada}</span>
@@ -102,7 +104,7 @@ export const IntroActual = () => {
         </p>
       </div>
 
-      <div className="bg-white px-4 py-2 rounded-lg shadow flex flex-col gap-1 w-full h-full">
+      <div className="py-5 px-6 flex flex-col justify-center items-center gap-1 w-full h-full">
         <p className="text-indigo-500 text-sm">Ingreso final</p>
         <p className="text-slate-700 text-sm font-semibold">
           {Number(totalIngreso).toLocaleString("es-AR", {
